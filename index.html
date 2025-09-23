@@ -341,7 +341,7 @@
             subtotal = 0;
             cart.forEach((item, index) => {
                 subtotal += item.price;
-                cartItems.innerHTML += `<li class="flex justify-between">${item.product} - $${item.price.toFixed(2)} <button class="remove-item text-red-500" data-index="${index}">X</button></li>`;
+                cartItems.innerHTML += `<li class="flex justify-between">${item.product} - Rs.${item.price.toFixed(2)} <button class="remove-item text-red-500" data-index="${index}">X</button></li>`;
             });
             document.getElementById('cart-subtotal').textContent = subtotal.toFixed(2);
             calculateTotal();

@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Bhairant Gajak - Your Ultimate Sweet Shop</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            background: linear-gradient(to bottom right, #ffeaa7, #fab1a0);
+            font-family: 'Poppins', sans-serif;
+        }
+        .hero-bg {
+            background-image: url('BG.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+        .btn-primary {
+            background-color: #e17055;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #d63031;
+            transform: scale(1.05);
+        }
+        .product-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .logo {
+            font-family: 'Dancing Script', cursive;
+            font-size: 2rem;
+            color: #e17055;
+        }
+        .cart-modal {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            overflow-y: auto;
+        }
+        .cart-modal.open {
+            transform: translateX(0);
+        }
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0,0,0,0.5);
+            z-index: 1500;
+            align-items: center;
+            justify-content: center;
+        }
+        .payment-modal.open {
+            display: flex;
+        }
+        .delivery-options {
+            display: none;
+        }
+        .delivery-options.show {
+            display: block;
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Dancing+Script:wght@700&display=swap" rel="stylesheet" />
+</head>
+<body class="text-gray-800">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div class="logo">Bhairant Gajak</div>
+            <div class="flex items-center space-x-4">
+                <input type="search" id="search" placeholder="Search gajak..." class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" />
+                <button id="cart-btn" class="relative text-gray-800 hover:text-red-500">
+                    <i class="fas fa-shopping-cart text-2xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full px-2 py-1">0</span>
+                </button>
+            </div>
+            <nav class="hidden md:flex space-x-8">
+                <a href="#home" class="hover:text-red-500">Home</a>
+                <a href="#sweets" class="hover:text-red-500">Gajak</a>
+                <a href="#about" class="hover:text-red-500">About</a>
+                <a href="#contact" class="hover:text-red-500">Contact</a>
+            </nav>
+            <div class="md:hidden">
+                <button id="menu-btn" class="text-gray-800 focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-100 px-4 py-2">
+            <a href="#home" class="block py-2">Home</a>
+            <a href="#sweets" class="block py-2">Gajak</a>
+            <a href="#about" class="block py-2">About</a>
+            <a href="#contact" class="block py-2">Contact</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg h-screen flex items-center justify-center text-center relative">
+        <div class="bg-white bg-opacity-80 p-8 rounded-lg shadow-lg max-w-lg mx-4">
+            <h1 class="text-4xl font-bold text-gray-800 mb-4">Indulge in Heavenly Gajak</h1>
+            <p class="text-lg mb-6">Discover a world of exquisite gajak treats crafted with love.</p>
+            <a href="#sweets" class="btn-primary inline-block">Explore Our Gajak</a>
+        </div>
+        <div class="absolute top-4 left-4">
+            <img src="logo.png" alt="Bhairant Gajak logo featuring traditional Indian sweet motifs in vibrant colors on a white background" class="w-33 h-12 object-cover rounded" />
+        </div>
+        <div class="product-showcase absolute bottom-10 flex space-x-4 overflow-x-auto">
+            <!-- Placeholder images -->
+            <img src="tilpati.png" alt="Traditional sesame gajak sticks arranged neatly on a wooden plate, golden brown and crunchy" class="w-20 h-20 rounded-full shadow-lg" />
+            <img src="kaju.png" alt="Close-up of peanut gajak pieces with a glossy sugar coating, stacked in a pyramid" class="w-20 h-20 rounded-full shadow-lg" />
+            <img src="roll.png" alt="Assorted gajak sweets with sesame, jaggery, and dry fruits, colorful and inviting" class="w-20 h-20 rounded-full shadow-lg" />
+        </div>
+    </section>
+
+    <!-- Featured Sweets Section -->
+    <section id="sweets" class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Our Featured Gajak</h2>
+            <div id="products" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="product-card bg-white p-6 rounded-lg shadow-md">
+                    <img src="tilpati.png" alt="Traditional sesame gajak sticks with jaggery, golden and crunchy, displayed on a rustic wooden board" class="w-full h-48 object-cover rounded-t-lg" />
+                    <h3 class="text-xl font-semibold mt-4">Til patti</h3>
+                    <p class="text-gray-600 mt-2">Crunchy and sweet Til patti made with pure jaggery.</p>
+                    <button class="add-to-cart btn-primary mt-4" data-product="Til patti" data-price="280">Add to Cart</button>
+                </div>
+                <div class="product-card bg-white p-6 rounded-lg shadow-md">
+                    <img src="chikki.png" alt="Peanut gajak pieces with a shiny sugar glaze, stacked on a white plate" class="w-full h-48 object-cover rounded-t-lg" />
+                    <h3 class="text-xl font-semibold mt-4">Peanut Chikki</h3>
+                    <p class="text-gray-600 mt-2">Delicious peanut Chikki with a perfect balance of sweetness and crunch.</p>
+                    <button class="add-to-cart btn-primary mt-4" data-product="Peanut Chikki" data-price="240">Add to Cart</button>
+                </div>
+                <div class="product-card bg-white p-6 rounded-lg shadow-md">
+                    <img src="kaju.png" alt="Assorted gajak sweets with sesame, peanuts, and dry fruits, colorful and inviting" class="w-full h-48 object-cover rounded-t-lg" />
+                    <h3 class="text-xl font-semibold mt-4">Kaju Gajak</h3>
+                    <p class="text-gray-600 mt-2">Delightful kaju gajak crafted for every craving moment (Pure Ghee).</p>
+                    <button class="add-to-cart btn-primary mt-4" data-product="Kaju Gajak" data-price="440">Add to Cart</button>
+                </div>
+                  <div class="product-card bg-white p-6 rounded-lg shadow-md">
+                    <img src="barfi.png" alt="Assorted gajak sweets with sesame, peanuts, and dry fruits, colorful and inviting" class="w-full h-48 object-cover rounded-t-lg" />
+                    <h3 class="text-xl font-semibold mt-4">Til Barfi</h3>
+                    <p class="text-gray-600 mt-2">A delightful til barfi gajak  for every cravin.</p>
+                    <button class="add-to-cart btn-primary mt-4" data-product="Til Brafi" data-price="320">Add to Cart</button>
+                </div>
+                <div class="product-card bg-white p-6 rounded-lg shadow-md">
+                    <img src="marodi.png" alt="Assorted gajak sweets with sesame, peanuts, and dry fruits inviting" class="w-full h-48 object-cover rounded-t-lg" />
+                    <h3 class="text-xl font-semibold mt-4">Marodi Gajak</h3>
+                    <p class="text-gray-600 mt-2">Savor the richness of marodi for every craving.</p>
+                    <button class="add-to-cart btn-primary mt-4" data-product="Marodi Gajak" data-price="280">Add to Cart</button>
+                </div>
+                <div class="product-card bg-white p-6 rounded-lg shadow-md">
+                    <img src="roll.png" alt="Assorted gajak sweets with sesame and dry fruits, colorful and inviting" class="w-full h-48 object-cover rounded-t-lg" />
+                    <h3 class="text-xl font-semibold mt-4">Kaju roll</h3>
+                    <p class="text-gray-600 mt-2">A bite of kaju roll, a burst of happiness</p>
+                    <button class="add-to-cart btn-primary mt-4" data-product="Kaju roll" data-price="280">Add to Cart</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Delivery Info Section -->
+    <section id="delivery" class="py-16 bg-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-6">Delivery Options</h2>
+            <p class="text-lg mb-4">We currently offer delivery only within Gwalior for orders over Rs 1000. Delivery fee is Rs 50 for 10km.</p>
+            <p class="text-md">Pick up is free from our shop located at [Near Ram Mandir Phalka Bazar, Gwalior.</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-16">
+        <div class="container mx-auto px-4 flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-8 md:mb-0">
+                <img src="shop.jpg" alt="Interior of Bhairant Gajak sweet shop with shelves filled with jars of gajak sweets, warm inviting atmosphere" class="w-full rounded-lg shadow-lg" />
+            </div>
+            <div class="md:w-1/2 md:pl-12">
+                <h2 class="text-3xl font-bold mb-6">About Bhairant Gajak</h2>
+                <p class="text-lg leading-relaxed mb-4">Established in the heart of Gwalior, Bhairant Gajak has been crafting sweet memories for over a decade. Our master confectioners use only the highest quality ingredients to create unparalleled gajak treats that delight the senses.</p>
+                <p class="text-lg leading-relaxed">From classic sesame gajak to innovative mixed varieties, we cater to all sweet tooth cravings. Come visit us and experience the magic of handmade gajak!</p>
+                <p class="text-lg leading-relaxed mb-4"><b>Address :</b> Near ram mandir, Phalkha bazar ,Gwalior 474001</p>
+                <p class="text-lg leading-relaxed mb-4"><b>Shop Owner :</b>
+                Deepak Jain ,Ayush Jain .</p>
+                <p class="text-lg leading-relaxed mb-4"><b> Contact Number: </b>8817825830 , 6264663741 .</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-16 bg-gray-100">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">What Our Customers Say</h2>
+            <div class="flex flex-col md:flex-row md:space-x-8">
+                <div class="bg-white p-6 rounded-lg shadow-md flex-1 mb-8 md:mb-0">
+                    <p class="text-lg italic mb-4">"Bhairant Gajak has the most authentic and delicious gajak I've ever tasted. Highly recommended!"</p>
+                    <cite class="text-right">- Jane Doe</cite>
+                </div>
+                <div class="bg-white p-6 rounded-lg shadow-md flex-1">
+                    <p class="text-lg italic mb-4">"The peanut gajak is perfection – crunchy and sweet with the perfect texture!"</p>
+                    <cite class="text-right">- John Smith</cite>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold text-center mb-12">Get in Touch</h2>
+            <div class="max-w-md mx-auto bg-white p-8 rounded-lg shadow-md">
+                <form id="contact-form">
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2" for="name">Name</label>
+                        <input type="text" id="name" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2" for="email">Email</label>
+                        <input type="email" id="email" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required />
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-gray-700 mb-2" for="message">Message</label>
+                        <textarea id="message" rows="4" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required></textarea>
+                    </div>
+                    <button type="submit" class="btn-primary w-full">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="cart-modal">
+        <div class="p-4">
+            <h3 class="text-xl font-bold mb-4">Your Cart</h3>
+            <ul id="cart-items" class="space-y-2"></ul>
+            <div class="mt-4">
+                <strong>Subtotal: Rs<span id="cart-subtotal">0.00</span></strong>
+                <div class="mt-2">
+                    <label for="delivery-option" class="block text-sm font-medium text-gray-700">Add Delivery (Gwalior Only - Rs1000 fee)</label>
+                    <input type="checkbox" id="delivery-checkbox" class="mt-1">
+                    <div id="delivery-options" class="delivery-options mt-2">
+                        <label class="block text-sm font-medium text-gray-700">Delivery Address (Gwalior Only)</label>
+                        <input type="text" id="delivery-address" placeholder="Street Address, Gwalior" class="w-full px-3 py-2 border border-gray-300 rounded-lg mb-2" />
+                    </div>
+                </div>
+                <div class="mt-2"><strong>Total: Rs<span id="cart-total">0.00</span></strong></div>
+            </div>
+            <button id="checkout-btn" class="btn-primary mt-4 w-full">Proceed to Payment</button>
+            <button id="close-cart" class="mt-2 text-gray-600">Close</button>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div id="payment-modal" class="payment-modal">
+        <div class="bg-white p-8 rounded-lg max-w-md w-full mx-4">
+            <h3 class="text-xl font-bold mb-4">Payment Details</h3>
+            <form id="payment-form">
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2" for="card-number">Card Number</label>
+                    <input type="text" id="card-number" placeholder="1234 5678 9012 3456" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required />
+                </div>
+                <div class="flex space-x-2 mb-4">
+                    <div class="flex-1">
+                        <label class="block text-gray-700 mb-2" for="expiry">Expiry Date</label>
+                        <input type="text" id="expiry" placeholder="MM/YY" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required />
+                    </div>
+                    <div class="flex-1">
+                        <label class="block text-gray-700 mb-2" for="cvv">CVV</label>
+                        <input type="text" id="cvv" placeholder="123" class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500" required />
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary w-full">Pay Now</button>
+                <button id="close-payment" type="button" class="mt-2 text-gray-600">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <div class="logo mb-4">Bhairant Gajak</div>
+            <p>© 2012 Bhairant Gajak. All rights reserved.</p>
+            <div class="mt-4">
+                <a href="#" class="text-white hover:text-red-500 mx-2"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="text-white hover:text-red-500 mx-2"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="text-white hover:text-red-500 mx-2"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let cart = [];
+        let subtotal = 0;
+        let deliveryFee = 0;
+
+        // Search functionality
+        const searchBar = document.getElementById('search');
+        const products = document.getElementById('products');
+        const productCards = Array.from(products.children);
+
+        searchBar.addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            productCards.forEach(card => {
+                const title = card.querySelector('h3').textContent.toLowerCase();
+                card.style.display = title.includes(query) ? 'block' : 'none';
+            });
+        });
+
+        // Cart functionality
+        document.querySelectorAll('.add-to-cart').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const product = this.getAttribute('data-product');
+                const price = parseFloat(this.getAttribute('data-price'));
+                cart.push({ product, price });
+                updateCart();
+                alert(`${product} added to cart!`);
+            });
+        });
+
+        function updateCart() {
+            const cartCount = document.getElementById('cart-count');
+            cartCount.textContent = cart.length;
+            const cartItems = document.getElementById('cart-items');
+            cartItems.innerHTML = '';
+            subtotal = 0;
+            cart.forEach((item, index) => {
+                subtotal += item.price;
+                cartItems.innerHTML += `<li class="flex justify-between">${item.product} - $${item.price.toFixed(2)} <button class="remove-item text-red-500" data-index="${index}">X</button></li>`;
+            });
+            document.getElementById('cart-subtotal').textContent = subtotal.toFixed(2);
+            calculateTotal();
+
+            // Add remove functionality
+            document.querySelectorAll('.remove-item').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const index = this.getAttribute('data-index');
+                    cart.splice(index, 1);
+                    updateCart();
+                });
+            });
+        }
+
+        function calculateTotal() {
+            const deliveryCheckbox = document.getElementById('delivery-checkbox');
+            if (deliveryCheckbox.checked) {
+                deliveryFee = subtotal >= 1000 ? 50 : 0;
+            } else {
+                deliveryFee = 0;
+            }
+            const total = subtotal + deliveryFee;
+            document.getElementById('cart-total').textContent = total.toFixed(2);
+        }
+
+        // Delivery options
+        document.getElementById('delivery-checkbox').addEventListener('change', function() {
+            const deliveryOptions = document.getElementById('delivery-options');
+            if (this.checked) {
+                deliveryOptions.classList.add('show');
+            } else {
+                deliveryOptions.classList.remove('show');
+            }
+            calculateTotal();
+        });
+
+        // Cart modal
+        const cartBtn = document.getElementById('cart-btn');
+        const cartModal = document.getElementById('cart-modal');
+        const closeCart = document.getElementById('close-cart');
+
+        cartBtn.addEventListener('click', () => {
+            cartModal.classList.add('open');
+        });
+
+        closeCart.addEventListener('click', () => {
+            cartModal.classList.remove('open');
+        });
+
+        // Payment modal
+        const paymentModal = document.getElementById('payment-modal');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const closePayment = document.getElementById('close-payment');
+
+        checkoutBtn.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            const deliveryCheckbox = document.getElementById('delivery-checkbox');
+            if (deliveryCheckbox.checked) {
+                const address = document.getElementById('delivery-address').value;
+                if (!address.toLowerCase().includes('delhi')) {
+                    alert('Delivery is only available in Gwalior.');
+                    return;
+                }
+                if (subtotal < 1000) {
+                    alert('Minimum order for delivery is Rs1000.');
+                    return;
+                }
+            }
+            cartModal.classList.remove('open');
+            paymentModal.classList.add('open');
+        });
+
+        closePayment.addEventListener('click', () => {
+            paymentModal.classList.remove('open');
+        });
+
+        paymentModal.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Payment successful! Thank you for your purchase.');
+            cart = [];
+            updateCart();
+            paymentModal.classList.remove('open');
+        });
+
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Contact form submission
+        const form = document.getElementById('contact-form');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! We\'ll get back to you soon.');
+            form.reset();
+        });
+
+        // Smooth scrolling for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Simple carousel for hero images (basic implementation)
+        const showcase = document.querySelector('.product-showcase');
+        let scrollAmount = 0;
+        setInterval(() => {
+            scrollAmount += 20;
+            showcase.scrollLeft = scrollAmount;
+            if (scrollAmount >= showcase.scrollWidth - showcase.clientWidth) {
+                scrollAmount = 0;
+            }
+        }, 3000);
+    </script>
+</body>
+</html>
+</content>
+</create_file>
